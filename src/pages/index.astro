@@ -1,16 +1,48 @@
 ---
+import { getWooparoos } from "../lib/microcms";
 
+const response = await getWooparoos({
+  fields: ["id", "name", "image", "egg_image", "type", "time"],
+});
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>ウパルオデッセイオデッセイ</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>ウパルオデッセイ 攻略</title>
+  </head>
+  <body>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>ウパルの画像</th>
+            <th>召喚石の画像</th>
+            <th>属性</th>
+            <th>召喚時間</th>
+          </tr>
+        </thead>
+        <tbody>
+          {response.contents &&
+            response.contents.map((content: any) => (
+              <tr>
+                <td>{content.name}</td>
+                <td>
+                  <img src={`${content.image.url}?fit=crop&w=100&h=100`} />
+                </td>
+                <td>
+                  <img src={`${content.egg_image.url}?fit=crop&w=100&h=100`} />
+                </td>
+                <td>{content.type}</td>
+                <td>{content.time}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </main>
+  </body>
 </html>
