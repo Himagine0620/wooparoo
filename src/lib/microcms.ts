@@ -23,5 +23,5 @@ export type WooparooResponse = {
 
 //APIの呼び出し
 export const getWooparoos = async (queries?: MicroCMSQueries) => {
-  return await client.get<WooparooResponse>({ endpoint: "wooparoos", queries });
+  return await client.get<WooparooResponse>({ endpoint: "wooparoos", queries: { ...queries, limit: 100} });
 };
