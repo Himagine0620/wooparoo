@@ -2,3 +2,5 @@
 Astro
 TypeScript
 MicroCMS
+shadcn/ui
+TailwindCSS
