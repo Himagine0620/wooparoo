@@ -1,5 +1,15 @@
 ---
 import { getWooparoos } from "../lib/microcms";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
 
 const response = await getWooparoos({
   fields: ["id", "name", "image", "egg_image", "type", "time"],
@@ -16,33 +26,33 @@ const response = await getWooparoos({
   </head>
   <body>
     <main>
-      <table>
-        <thead>
-          <tr>
-            <th>名前</th>
-            <th>ウパルの画像</th>
-            <th>召喚石の画像</th>
-            <th>属性</th>
-            <th>召喚時間</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>名前</TableHead>
+            <TableHead>ウパルの画像</TableHead>
+            <TableHead>召喚石の画像</TableHead>
+            <TableHead>属性</TableHead>
+            <TableHead>召喚時間</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {response.contents &&
             response.contents.map((content: any) => (
-              <tr>
-                <td>{content.name}</td>
-                <td>
+              <TableRow>
+                <TableCell>{content.name}</TableCell>
+                <TableCell>
                   <img src={`${content.image.url}?fit=crop&w=100&h=100`} />
-                </td>
-                <td>
+                </TableCell>
+                <TableCell>
                   <img src={`${content.egg_image.url}?fit=crop&w=100&h=100`} />
-                </td>
-                <td>{content.type}</td>
-                <td>{content.time}</td>
-              </tr>
+                </TableCell>
+                <TableCell>{content.type}</TableCell>
+                <TableCell>{content.time}</TableCell>
+              </TableRow>
             ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </main>
   </body>
 </html>
