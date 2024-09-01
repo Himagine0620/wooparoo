@@ -4,8 +4,8 @@ import { createClient } from "microcms-js-sdk";
 import type { Image } from "../types/image";
 
 const client = createClient({
-  serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN || import.meta.env.MICROCMS_SERVICE_DOMAIN,
-  apiKey: process.env.MICROCMS_API_KEY || import.meta.env.MICROCMS_API_KEY,
+  serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
+  apiKey: import.meta.env.MICROCMS_API_KEY,
 });
 
 //型定義
