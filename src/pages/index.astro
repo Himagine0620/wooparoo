@@ -9,10 +9,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
-
-const response = await getWooparoos({
+// `getWooparoos` が結合された配列を返すため、`response` は配列となります
+const combinedContents = await getWooparoos({
   fields: ["id", "wooparoo_id", "name", "image", "egg_image", "type", "time"],
 });
 ---
@@ -39,23 +39,39 @@ const response = await getWooparoos({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {response.contents &&
-              response.contents.sort((a: any, b: any) => a.wooparoo_id - b.wooparoo_id).map((content: any) => (
-                <TableRow key={content.wooparoo_id} className="m-0 border-t p-0 even:bg-muted">
-                  <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">{content.name}</TableCell>
-                  <TableCell className="border px-4 py-2 [&[align=center]]:text-center [&[align=right]]:text-right">
-                    {content.image?.url ? <img src={`${content.image?.url}?fit=crop&w=50&h=50`} /> : <img src="" />}
-                  </TableCell>
-                  <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
-                    {content.egg_image?.url ? <img src={`${content.egg_image?.url}?fit=crop&w=50&h=50`} /> : <img src="" />}
-                  </TableCell>
-                  <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">{content.type}</TableCell>
-                  <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">{content.time}</TableCell>
-                </TableRow>
-              ))}
+            {combinedContents &&
+              combinedContents
+                .sort((a: any, b: any) => a.wooparoo_id - b.wooparoo_id)
+                .map((content: any) => (
+                  <TableRow key={content.wooparoo_id} className="m-0 border-t p-0 even:bg-muted">
+                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
+                      {content.name}
+                    </TableCell>
+                    <TableCell className="border px-4 py-2 [&[align=center]]:text-center [&[align=right]]:text-right">
+                      {content.image?.url ? (
+                        <img src={`${content.image.url}?fit=crop&w=50&h=50`} alt={content.name} />
+                      ) : (
+                        <img src="" />
+                      )}
+                    </TableCell>
+                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
+                      {content.egg_image?.url ? (
+                        <img src={`${content.egg_image.url}?fit=crop&w=50&h=50`} alt="Egg image" />
+                      ) : (
+                        <img src="" />
+                      )}
+                    </TableCell>
+                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
+                      {content.type.join(', ')}
+                    </TableCell>
+                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
+                      {content.time.join(', ')}
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
-      </div>
+      </div>      
     </main>
   </body>
 </html>
