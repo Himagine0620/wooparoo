@@ -10,10 +10,11 @@ const client = createClient({
 
 //型定義
 export type Wooparoo = {
+  id?: string; // idをオプションにする
   wooparoo_id: number;
   name: string;
-  image?: Image;
-  egg_image?: Image;
+  image: { url: string } | null;
+  egg_image: { url: string } | null;
   type: string[];
   time: string[];
 };
