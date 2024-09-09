@@ -1,17 +1,9 @@
 ---
-import { imageConfig } from "astro:assets";
+import WooparooTable from "../components/WooparooTable";
 import { getWooparoos } from "../lib/microcms";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
-// `getWooparoos` が結合された配列を返すため、`response` は配列となります
+
+// MicroCMSからデータを取得
 const combinedContents = await getWooparoos({
   fields: ["id", "wooparoo_id", "name", "image", "egg_image", "type", "time"],
 });
@@ -22,56 +14,12 @@ const combinedContents = await getWooparoos({
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
     <title>ウパルオデッセイ 攻略</title>
   </head>
   <body>
     <main>
-      <div class="my-6 w-full overflow-y-auto">
-        <Table className="w-full">
-          <TableHeader>
-            <TableRow className="m-0 border-t p-0 even:bg-muted">
-              <TableHead className="border px-4 py-2 text-center font-bold [&[align=center]]:text-center [&[align=right]]:text-right">名前</TableHead>
-              <TableHead className="border px-4 py-2 text-center font-bold [&[align=center]]:text-center [&[align=right]]:text-right">ウパルの画像</TableHead>
-              <TableHead className="border px-4 py-2 text-center font-bold [&[align=center]]:text-center [&[align=right]]:text-right">召喚石の画像</TableHead>
-              <TableHead className="border px-4 py-2 text-center font-bold [&[align=center]]:text-center [&[align=right]]:text-right">属性</TableHead>
-              <TableHead className="border px-4 py-2 text-center font-bold [&[align=center]]:text-center [&[align=right]]:text-right">召喚時間</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {combinedContents &&
-              combinedContents
-                .sort((a: any, b: any) => a.wooparoo_id - b.wooparoo_id)
-                .map((content: any) => (
-                  <TableRow key={content.wooparoo_id} className="m-0 border-t p-0 even:bg-muted">
-                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
-                      {content.name}
-                    </TableCell>
-                    <TableCell className="border px-4 py-2 [&[align=center]]:text-center [&[align=right]]:text-right">
-                      {content.image?.url ? (
-                        <img src={`${content.image.url}?fit=crop&w=50&h=50`} alt={content.name} />
-                      ) : (
-                        <img src="" />
-                      )}
-                    </TableCell>
-                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
-                      {content.egg_image?.url ? (
-                        <img src={`${content.egg_image.url}?fit=crop&w=50&h=50`} alt="Egg image" />
-                      ) : (
-                        <img src="" />
-                      )}
-                    </TableCell>
-                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
-                      {content.type.join(', ')}
-                    </TableCell>
-                    <TableCell className="border px-4 py-2 text-center [&[align=center]]:text-center [&[align=right]]:text-right">
-                      {content.time.join(', ')}
-                    </TableCell>
-                  </TableRow>
-                ))}
-          </TableBody>
-        </Table>
-      </div>      
+      <!-- Reactコンポーネントをここに挿入 -->
+      <WooparooTable contents={combinedContents} client:load />
     </main>
   </body>
 </html>
